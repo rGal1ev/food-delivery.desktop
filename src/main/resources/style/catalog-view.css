@@ -1,0 +1,20 @@
+.catalog-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+}
+
+.food-card-title {
+    -fx-font-size: 13px;
+}
+
+.food-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-cursor: HAND;
+    -fx-padding: 7px 0px 0px 0px;
+}
+
+.food-card:hover {
+    -fx-background-color: #fafafa;
+}

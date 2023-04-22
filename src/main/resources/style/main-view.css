@@ -1,0 +1,23 @@
+.header {
+    -fx-background-color: #FEFEFE;
+    -fx-background-radius: 0px;
+    -fx-border-color: #46ACC2;
+    -fx-border-width: 3px 0px 0px 0px;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-cursor: HAND;
+}
+
+.nav-button:hover {
+    -fx-background-color: #F2F2F2;
+    -fx-font-weight: bold;
+}
+
+.nav-button.active {
+    -fx-font-weight: bold;
+    -fx-background-color: #F2F2F2;
+    -fx-border-color: #46ACC2;
+    -fx-border-width: 0px 0px 3px 0px;
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="catalogView" prefHeight="440.0" prefWidth="400.0" styleClass="light-container" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CatalogController">
+
+   <ScrollPane hbarPolicy="NEVER" prefHeight="440.0" prefWidth="400.0" style="-fx-border-color: #fafafa;" vbarPolicy="NEVER">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0">
+         <FlowPane fx:id="foodListContainer" columnHalignment="CENTER" hgap="20.0" prefWidth="400.0" style="-fx-background-color: #f4f4f4; -fx-padding: 10px;" vgap="20.0" />
+      </AnchorPane>
+   </ScrollPane>
+
+   <stylesheets>
+      <URL value="@../main.css" />
+      <URL value="@../style/catalog-view.css" />
+   </stylesheets>
+</Pane>

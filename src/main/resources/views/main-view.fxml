@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="400.0" styleClass="parent" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+   <Pane layoutY="35.0" prefHeight="55.0" prefWidth="400.0">
+      <Pane fx:id="openCartView" onMouseClicked="#onOpenCartViewClick" prefHeight="55.0" prefWidth="135.0" styleClass="nav-button">
+         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../assets/icons/cart.png" />
+         </ImageView>
+         <Label layoutX="63.0" layoutY="20.0" text="Корзина" />
+      </Pane>
+
+      <Pane fx:id="openCatalogView" layoutX="135.0" onMouseClicked="#onOpenCatalogViewClick" prefHeight="55.0" prefWidth="135.0" styleClass="nav-button">
+         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../assets/icons/catalog.png" />
+         </ImageView>
+         <Label layoutX="63.0" layoutY="20.0" text="Каталог" />
+      </Pane>
+
+      <Pane fx:id="openProfileView" layoutX="269.0" onMouseClicked="#onOpenProfileViewClick" prefHeight="55.0" prefWidth="131.0" styleClass="nav-button">
+         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../assets/icons/profile.png" />
+         </ImageView>
+         <Label layoutX="63.0" layoutY="20.0" text="Профиль" />
+      </Pane>
+
+      <styleClass>
+         <String fx:value="light-container" />
+         <String fx:value="nav-container" />
+      </styleClass>
+   </Pane>
+
+   <Pane prefHeight="35.0" prefWidth="400.0">
+      <Label layoutX="30.0" layoutY="12.0" text="Food Delivery" />
+      <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../assets/icons/logo.png" />
+      </ImageView>
+      <ImageView fx:id="closeApp" fitHeight="30.0" fitWidth="30.0" layoutX="366.0" layoutY="4.0" onMouseClicked="#onCloseAppClick" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../assets/icons/close-app.png" />
+      </ImageView>
+      <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="337.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../assets/icons/contacts.png" />
+      </ImageView>
+
+      <styleClass>
+         <String fx:value="light-container" />
+         <String fx:value="header" />
+      </styleClass>
+   </Pane>
+
+   <Pane fx:id="viewContainer" layoutY="100.0" prefHeight="440.0" prefWidth="400.0">
+      <Label layoutX="126.0" layoutY="206.0" styleClass="title" text="Food Delivery" />
+      <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="150.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../assets/icons/logo.png" />
+      </ImageView>
+      <Label layoutX="78.0" layoutY="235.0" prefHeight="55.0" prefWidth="245.0" text="Выбирай лучшее качество, заказывай вкусню дешевую и не отправленную еду бесплатно!" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="121.0" layoutY="304.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="156.0" text="Войти в профиль" textFill="WHITE" />
+
+      <styleClass>
+         <String fx:value="light-container" />
+         <String fx:value="view-container" />
+      </styleClass>
+   </Pane>
+
+   <stylesheets>
+      <URL value="@../main.css" />
+      <URL value="@../style/main-view.css" />
+   </stylesheets>
+</Pane>
