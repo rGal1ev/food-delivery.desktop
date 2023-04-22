@@ -18,7 +18,7 @@
       <Image url="@../assets/icons/empty.png" />
    </ImageView>
    <Label layoutX="78.0" layoutY="238.0" prefHeight="35.0" prefWidth="245.0" text="Кажется, вы еще не добавили ни одного блюда, перейдите в каталог для выбора" textAlignment="CENTER" wrapText="true" />
-   <Button fx:id="openCatalogButton" layoutX="122.0" layoutY="295.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="156.0" text="Перейти в каталог" textFill="WHITE" />
+   <Button onAction="#onOpenCatalogButton" fx:id="openCatalogButton" layoutX="122.0" layoutY="295.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="156.0" text="Перейти в каталог" textFill="WHITE" />
 
    <stylesheets>
       <URL value="@../main.css" />

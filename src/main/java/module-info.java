@@ -5,10 +5,11 @@ module main {
 
     opens main to javafx.fxml;
     opens controllers to javafx.fxml;
-    opens helpers to javafx.fxml;
+    opens models to javafx.fxml;
+    opens models.data to javafx.fxml;
 
     exports main;
-    exports helpers;
     exports models;
     exports controllers;
+    exports models.data;
 }

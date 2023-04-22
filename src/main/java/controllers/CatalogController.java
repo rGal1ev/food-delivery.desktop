@@ -1,24 +1,17 @@
 package controllers;
 
-import helpers.Controller;
+import models.Controller;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import models.Food;
-
-import java.util.ArrayList;
-import java.util.Objects;
+import models.data.Food;
 
 public class CatalogController extends Controller {
     public Pane catalogView;
@@ -81,18 +74,14 @@ public class CatalogController extends Controller {
             foodCardAction.setPrefWidth(160);
             foodCardAction.setPrefHeight(36);
 
-            foodCardAction.setOnAction(e -> {
-                deleteFromCart(food);
-            });
+            foodCardAction.setOnAction(e -> deleteFromCart(food));
 
         } else {
             foodCardAction.setText("Добавить в корзину");
             foodCardAction.setPrefWidth(160);
             foodCardAction.setPrefHeight(36);
 
-            foodCardAction.setOnAction(e -> {
-                sendToCart(food);
-            });
+            foodCardAction.setOnAction(e -> sendToCart(food));
         }
 
         foodCardContainer.getChildren().addAll(foodImageView, foodName, foodCardAction);
@@ -105,6 +94,7 @@ public class CatalogController extends Controller {
         for (Food foodInCart : this.cart.foodList) {
             if (foodInCart == sendingFood) {
                 isFoodInCart = true;
+                break;
             }
         }
 
@@ -122,6 +112,7 @@ public class CatalogController extends Controller {
         for (Food foodInCart : this.cart.foodList) {
             if (foodInCart == sendingFood) {
                 isFoodInCart = true;
+                break;
             }
         }
 

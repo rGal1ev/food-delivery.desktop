@@ -1,13 +1,12 @@
-package models;
+package models.data;
 
 public class Food {
     private int id;
-    private String title = "";
-    private String description = "";
-    private double price = 0;
+    private String title;
+    private String description;
+    private double price;
     private boolean inCart = false;
-
-    private String image_url = "";
+    private String image_url;
 
     public Food(int id, String title, String description, double price, String image_url) {
         this.id = id;

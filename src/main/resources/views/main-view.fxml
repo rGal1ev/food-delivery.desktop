@@ -10,21 +10,21 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="400.0" styleClass="parent" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <Pane layoutY="35.0" prefHeight="55.0" prefWidth="400.0">
-      <Pane fx:id="openCartView" onMouseClicked="#onOpenCartViewClick" prefHeight="55.0" prefWidth="135.0" styleClass="nav-button">
+      <Pane fx:id="CartViewNavigationLink" onMouseClicked="#onOpenCartViewClick" prefHeight="55.0" prefWidth="135.0" styleClass="nav-button">
          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../assets/icons/cart.png" />
          </ImageView>
          <Label layoutX="63.0" layoutY="20.0" text="Корзина" />
       </Pane>
 
-      <Pane fx:id="openCatalogView" layoutX="135.0" onMouseClicked="#onOpenCatalogViewClick" prefHeight="55.0" prefWidth="135.0" styleClass="nav-button">
+      <Pane fx:id="CatalogViewNavigationLink" layoutX="135.0" onMouseClicked="#onOpenCatalogViewClick" prefHeight="55.0" prefWidth="135.0" styleClass="nav-button">
          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../assets/icons/catalog.png" />
          </ImageView>
          <Label layoutX="63.0" layoutY="20.0" text="Каталог" />
       </Pane>
 
-      <Pane fx:id="openProfileView" layoutX="269.0" onMouseClicked="#onOpenProfileViewClick" prefHeight="55.0" prefWidth="131.0" styleClass="nav-button">
+      <Pane fx:id="ProfileViewNavigationLink" layoutX="269.0" onMouseClicked="#onOpenProfileViewClick" prefHeight="55.0" prefWidth="131.0" styleClass="nav-button">
          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../assets/icons/profile.png" />
          </ImageView>
