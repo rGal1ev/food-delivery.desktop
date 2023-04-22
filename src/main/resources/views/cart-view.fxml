@@ -1,24 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane id="cartView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="400.0" styleClass="light-container" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CartController">
-   <Label layoutX="115.0" layoutY="203.0" styleClass="title" text="Корзина пустая">
-      <font>
-         <Font name="Roboto" size="1.0" />
-      </font>
-   </Label>
-   <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="150.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../assets/icons/empty.png" />
-   </ImageView>
-   <Label layoutX="78.0" layoutY="238.0" prefHeight="35.0" prefWidth="245.0" text="Кажется, вы еще не добавили ни одного блюда, перейдите в каталог для выбора" textAlignment="CENTER" wrapText="true" />
-   <Button onAction="#onOpenCatalogButton" fx:id="openCatalogButton" layoutX="122.0" layoutY="295.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="156.0" text="Перейти в каталог" textFill="WHITE" />
+<Pane id="cartView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="400.0" styleClass="light-container" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CartController">
+   <Pane prefHeight="58.0" prefWidth="400.0" style="-fx-background-color: #FEFEFE;">
+      <Label layoutX="14.0" layoutY="22.0" text="Вышел отличный набор!" />
+      <Button layoutX="209.0" layoutY="12.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="177.0" text="Очистить корзину" />
+   </Pane>
+
+   <Pane layoutY="58.0" prefHeight="383.0" prefWidth="400.0">
+      <FlowPane orientation="VERTICAL" prefHeight="383.0" prefWidth="400.0" vgap="10.0">
+         <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="10.0" prefHeight="59.0" prefWidth="400.0">
+               <ImageView fitHeight="53.0" fitWidth="97.0" pickOnBounds="true">
+                     <Image url="@../assets/photos/rolly.jpg" />
+               </ImageView>
+               <VBox prefHeight="53.0" prefWidth="151.0" spacing="5.0">
+                     <Label prefHeight="32.0" prefWidth="150.0" text="Ролл Филадельфия и еще какой-то текст" wrapText="true" />
+                     <Label layoutX="10.0" layoutY="10.0" prefHeight="4.0" prefWidth="150.0" text="Цена:" />
+               </VBox>
+               <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="73.0" text="Убрать">
+                  <FlowPane.margin>
+                     <Insets left="26.0" />
+                  </FlowPane.margin>
+               </Button>
+            <padding>
+               <Insets left="20.0" />
+            </padding>
+         </FlowPane>
+         <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="10.0" layoutX="10.0" layoutY="20.0" prefHeight="59.0" prefWidth="400.0">
+               <ImageView fitHeight="53.0" fitWidth="97.0" pickOnBounds="true">
+                     <Image url="@../assets/photos/rolly.jpg" />
+               </ImageView>
+               <VBox prefHeight="53.0" prefWidth="151.0" spacing="5.0">
+                     <Label prefHeight="32.0" prefWidth="150.0" text="Ролл Филадельфия и еще какой-то текст" wrapText="true" />
+                     <Label layoutX="10.0" layoutY="10.0" prefHeight="4.0" prefWidth="150.0" text="Цена:" />
+               </VBox>
+               <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="73.0" text="Убрать">
+                  <FlowPane.margin>
+                     <Insets left="26.0" />
+                  </FlowPane.margin>
+               </Button>
+            <padding>
+               <Insets left="20.0" />
+            </padding>
+         </FlowPane>
+         <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="10.0" layoutX="10.0" layoutY="79.0" prefHeight="59.0" prefWidth="400.0">
+               <ImageView fitHeight="53.0" fitWidth="97.0" pickOnBounds="true">
+                  <Image url="@../assets/photos/rolly.jpg" />
+               </ImageView>
+               <VBox prefHeight="53.0" prefWidth="151.0" spacing="5.0">
+                     <Label prefHeight="32.0" prefWidth="150.0" text="Ролл Филадельфия и еще какой-то текст" wrapText="true" />
+                     <Label layoutX="10.0" layoutY="10.0" prefHeight="4.0" prefWidth="150.0" text="Цена:" />
+               </VBox>
+               <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="73.0" text="Убрать">
+                  <FlowPane.margin>
+                     <Insets left="26.0" />
+                  </FlowPane.margin>
+               </Button>
+            <padding>
+               <Insets left="20.0" />
+            </padding>
+         </FlowPane>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </FlowPane>
+
+      <Pane prefHeight="383.0" prefWidth="400.0" visible="false">
+         <Label layoutX="112.0" layoutY="184.0" styleClass="title" text="Корзина пустая">
+            <font>
+               <Font name="Roboto" size="1.0" />
+            </font>
+         </Label>
+         <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="150.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../assets/icons/empty.png" />
+         </ImageView>
+         <Label layoutX="78.0" layoutY="226.0" prefHeight="35.0" prefWidth="245.0" text="Кажется, вы еще не добавили ни одного блюда, перейдите в каталог для выбора" textAlignment="CENTER" wrapText="true" />
+         <Button fx:id="openCatalogButton" layoutX="122.0" layoutY="271.0" mnemonicParsing="false" onAction="#onOpenCatalogButton" prefHeight="35.0" prefWidth="156.0" text="Перейти в каталог" textFill="WHITE" />
+      </Pane>
+
+      <Pane layoutY="325.0" prefHeight="58.0" prefWidth="400.0" style="-fx-background-color: #fefefe;">
+         <Label layoutX="14.0" layoutY="31.0" text="Общая цена:" />
+         <Label layoutX="14.0" layoutY="15.0" text="Всего товаров: " />
+         <Button layoutX="209.0" layoutY="12.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="177.0" text="Отправить на заказ" />
+      </Pane>
+   </Pane>
 
    <stylesheets>
       <URL value="@../main.css" />
