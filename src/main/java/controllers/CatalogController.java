@@ -1,5 +1,8 @@
 package controllers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import models.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,15 +18,19 @@ import models.FoodAndNode;
 import models.data.Food;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CatalogController extends Controller {
     public Pane catalogView;
     public FlowPane foodListContainer;
     public ArrayList<FoodAndNode> foodCardList = new ArrayList<>();
     public ObservableList<Food> foodList = FXCollections.observableArrayList();
-
+    @FXML
+    private Pane CartMessagePane;
     @FXML
     private void initialize() {
+        CartMessagePane.setVisible(false);
+
         Food firstFood = new Food(1,
                 "Классический роллы Дневная Филладельфия",
                 "Описание еды, довольно длинное, почему бы и нет",
@@ -36,8 +43,31 @@ public class CatalogController extends Controller {
                 165.0,
                 "https://i.pinimg.com/originals/8b/1f/5c/8b1f5c294dd7bb0ca6fb6533d008c8a8.jpg");
 
-        foodList.add(firstFood);
-        foodList.add(secondFood);
+        Food thirdFood = new Food(3,
+                "Классический роллы с горбушей и нори",
+                "Описание еды, довольно длинное, почему бы и нет",
+                165.0,
+                "https://i.pinimg.com/originals/8b/1f/5c/8b1f5c294dd7bb0ca6fb6533d008c8a8.jpg");
+
+        Food fourthFood = new Food(4,
+                "Классический роллы с горбушей и нори",
+                "Описание еды, довольно длинное, почему бы и нет",
+                165.0,
+                "https://i.pinimg.com/originals/8b/1f/5c/8b1f5c294dd7bb0ca6fb6533d008c8a8.jpg");
+
+        Food fivthFood = new Food(5,
+                "Классический роллы с горбушей и нори",
+                "Описание еды, довольно длинное, почему бы и нет",
+                165.0,
+                "https://i.pinimg.com/originals/8b/1f/5c/8b1f5c294dd7bb0ca6fb6533d008c8a8.jpg");
+
+        Food sixthFood = new Food(6,
+                "Классический роллы с горбушей и нори",
+                "Описание еды, довольно длинное, почему бы и нет",
+                165.0,
+                "https://i.pinimg.com/originals/8b/1f/5c/8b1f5c294dd7bb0ca6fb6533d008c8a8.jpg");
+
+        foodList.addAll(Arrays.asList(firstFood, secondFood, thirdFood, fourthFood, fivthFood, sixthFood));
 
         renderFoodList(foodList);
     }
@@ -124,6 +154,15 @@ public class CatalogController extends Controller {
 
             this.cart.foodList.add(sendingFood.food);
             sendingFood.food.setInCart(true);
+
+            CartMessagePane.setVisible(true);
+
+            Timeline timeline = new Timeline(new KeyFrame(
+                    Duration.millis(5 * 1000),
+                    afterEnd -> CartMessagePane.setVisible(false)
+            ));
+
+            timeline.play();
         }
     }
 
@@ -151,5 +190,9 @@ public class CatalogController extends Controller {
 
             foodCardAction.setOnAction(e -> sendToCart(sendingFood));
         }
+    }
+
+    public void onOpenCartViewButtonClick() {
+        this.viewController.changeView("cartView");
     }
 }
