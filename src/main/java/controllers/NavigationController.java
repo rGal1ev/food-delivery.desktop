@@ -28,8 +28,6 @@ public class NavigationController {
                     navigationNode.getStyleClass().remove(1);
                 } catch (Exception ignored) {}
             }
-
-            System.out.println(navigationLink.getNavigationNode().getStyleClass());
         }
     }
 }
