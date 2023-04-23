@@ -30,7 +30,18 @@ public class ViewController {
                 viewContainer.getChildren().add(view.getViewNode());
 
                 navigationController.changeActiveNavigation(view.getViewNavigationLinkID());
+                break;
             }
         }
+    }
+
+    public View getView(String viewID) {
+        for (View view : viewList) {
+            if (Objects.equals(view.getViewNode().getId(), viewID)) {
+                return view;
+            }
+        }
+
+        return null;
     }
 }

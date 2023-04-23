@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
 import javafx.util.Duration;
 import models.Controller;
 import javafx.collections.FXCollections;
@@ -14,16 +15,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import models.FoodAndNode;
+import models.View;
 import models.data.Food;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CatalogController extends Controller {
     public Pane catalogView;
     public FlowPane foodListContainer;
-    public ArrayList<FoodAndNode> foodCardList = new ArrayList<>();
     public ObservableList<Food> foodList = FXCollections.observableArrayList();
     @FXML
     private Pane CartMessagePane;
@@ -82,12 +80,13 @@ public class CatalogController extends Controller {
     }
 
     private FlowPane generateFoodCard(Food food) {
-        FlowPane foodCardContainer = new FlowPane();
-        foodCardContainer.getStyleClass().add("food-card");
-        foodCardContainer.setPrefWidth(175);
-        foodCardContainer.setPrefHeight(220);
-        foodCardContainer.setAlignment(Pos.TOP_CENTER);
-        foodCardContainer.setVgap(7);
+        FlowPane foodCardNode = new FlowPane();
+        foodCardNode.getStyleClass().add("food-card");
+        foodCardNode.setPrefWidth(175);
+        foodCardNode.setPrefHeight(220);
+        foodCardNode.setAlignment(Pos.TOP_CENTER);
+        foodCardNode.setVgap(7);
+        foodCardNode.setUserData(food.getId());
 
         Image foodImage = new Image(food.getImage_url());
         ImageView foodImageView = new ImageView(foodImage);
@@ -108,52 +107,51 @@ public class CatalogController extends Controller {
             foodCardAction.setPrefWidth(160);
             foodCardAction.setPrefHeight(36);
 
-            foodCardContainer.getChildren().addAll(foodImageView, foodName, foodCardAction);
-            FoodAndNode foodAndNode = new FoodAndNode(food, foodCardContainer);
-
-            foodCardList.add(foodAndNode);
-
-            foodCardAction.setOnAction(e -> deleteFromCart(foodAndNode));
+            foodCardAction.setOnAction(e -> deleteFromCart(food));
 
         } else {
             foodCardAction.setText("Добавить в корзину");
             foodCardAction.setPrefWidth(160);
             foodCardAction.setPrefHeight(36);
 
-            foodCardContainer.getChildren().addAll(foodImageView, foodName, foodCardAction);
-            FoodAndNode foodAndNode = new FoodAndNode(food, foodCardContainer);
-
-            foodCardList.add(foodAndNode);
-
-            foodCardAction.setOnAction(e -> sendToCart(foodAndNode));
+            foodCardAction.setOnAction(e -> sendToCart(food));
         }
 
-        return foodCardContainer;
+        foodCardNode.getChildren().addAll(foodImageView, foodName, foodCardAction);
+        return foodCardNode;
     }
 
-    public void sendToCart(FoodAndNode sendingFood) {
+    public void sendToCart(Food foodToCart) {
         boolean isFoodInCart = false;
 
         for (Food foodInCart : this.cart.foodList) {
-            if (foodInCart == sendingFood.food) {
+            if (foodInCart == foodToCart) {
                 isFoodInCart = true;
                 break;
             }
         }
 
         if (!isFoodInCart) {
-            Button foodCardAction = new Button();
-            foodCardAction.setText("Удалить из корзины");
-            foodCardAction.setPrefWidth(160);
-            foodCardAction.setPrefHeight(36);
+            foodToCart.setInCart(false);
+            this.cart.foodList.add(foodToCart);
 
-            sendingFood.foodCard.getChildren().remove(2);
-            sendingFood.foodCard.getChildren().add(foodCardAction);
+            for (Node child : foodListContainer.getChildren()) {
+                FlowPane foodCardNode = (FlowPane) child;
+                Integer foodCardNodeID = (Integer) foodCardNode.getUserData();
 
-            foodCardAction.setOnAction(e -> deleteFromCart(sendingFood));
+                if (foodCardNodeID == foodToCart.getId()) {
+                    Button foodCardAction = new Button();
+                    foodCardAction.setText("Удалить из корзины");
+                    foodCardAction.setPrefWidth(160);
+                    foodCardAction.setPrefHeight(36);
 
-            this.cart.foodList.add(sendingFood.food);
-            sendingFood.food.setInCart(true);
+                    foodCardAction.setOnAction(e -> deleteFromCart(foodToCart));
+
+                    foodCardNode.getChildren().remove(2);
+                    foodCardNode.getChildren().add(foodCardAction);
+                }
+
+            }
 
             CartMessagePane.setVisible(true);
 
@@ -164,35 +162,46 @@ public class CatalogController extends Controller {
 
             timeline.play();
         }
+
+        callCartViewRerender();
     }
 
-    public void deleteFromCart(FoodAndNode sendingFood) {
-        boolean isFoodInCart = false;
+    public void deleteFromCart(Food foodToDeleteFromCart) {
+        try {
+            this.cart.foodList.remove(foodToDeleteFromCart);
 
-        for (Food foodInCart : this.cart.foodList) {
-            if (foodInCart == sendingFood.food) {
-                isFoodInCart = true;
-                break;
+            foodToDeleteFromCart.setInCart(false);
+
+            for (Node child : foodListContainer.getChildren()) {
+                FlowPane foodCardNode = (FlowPane) child;
+                Integer foodCardNodeID = (Integer) foodCardNode.getUserData();
+
+                if (foodCardNodeID == foodToDeleteFromCart.getId()) {
+                    Button foodCardAction = new Button();
+                    foodCardAction.setText("Добавить в корзину");
+                    foodCardAction.setPrefWidth(160);
+                    foodCardAction.setPrefHeight(36);
+
+                    foodCardAction.setOnAction(e -> sendToCart(foodToDeleteFromCart));
+
+                    foodCardNode.getChildren().remove(2);
+                    foodCardNode.getChildren().add(foodCardAction);
+                }
+
             }
-        }
 
-        if (isFoodInCart) {
-            this.cart.foodList.remove(sendingFood.food);
-            sendingFood.food.setInCart(false);
+        } catch (Exception ignored) {}
 
-            Button foodCardAction = new Button();
-            foodCardAction.setText("Добавить в корзину");
-            foodCardAction.setPrefWidth(160);
-            foodCardAction.setPrefHeight(36);
-
-            sendingFood.foodCard.getChildren().remove(2);
-            sendingFood.foodCard.getChildren().add(foodCardAction);
-
-            foodCardAction.setOnAction(e -> sendToCart(sendingFood));
-        }
+        callCartViewRerender();
     }
 
     public void onOpenCartViewButtonClick() {
         this.viewController.changeView("cartView");
+    }
+
+    public void callCartViewRerender() {
+        View cartView = this.viewController.getView("cartView");
+        CartController cartViewController = (CartController) cartView.getController();
+        cartViewController.rerenderCartList();
     }
 }
