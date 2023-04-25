@@ -29,6 +29,8 @@ public class ViewController {
                 viewContainer.getChildren().clear();
                 viewContainer.getChildren().add(view.getViewNode());
 
+                view.getController().onMounted();
+
                 navigationController.changeActiveNavigation(view.getViewNavigationLinkID());
                 break;
             }

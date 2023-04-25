@@ -27,6 +27,12 @@ public class CartController extends Controller {
     @FXML
     private Pane clearCartContainer;
 
+    @Override
+    public void onMounted() {
+        System.out.println("Cart view is mounted");
+        rerenderCartList();
+    }
+
     @FXML
     private void initialize() {
         if (this.cart == null) {
@@ -48,7 +54,7 @@ public class CartController extends Controller {
         foodCartCard.setHgap(23);
         foodCartCard.getStyleClass().add("cart-item");
         
-        Image foodCartCardImage = new Image(food.getImage_url());
+        Image foodCartCardImage = new Image(food.getImage_url(), true);
         ImageView foodCartCardImageView = new ImageView(foodCartCardImage);
 
         foodCartCardImageView.setFitWidth(97);
@@ -76,6 +82,8 @@ public class CartController extends Controller {
         foodCartCardDeleteFromCartButton.setPrefHeight(32);
         foodCartCardDeleteFromCartButton.setPrefWidth(73);
 
+        foodCartCardDeleteFromCartButton.setOnAction(e -> deleteFoodFromCart(food));
+
         foodCartCard.getChildren().addAll(foodCartCardImageView, foodCartCardDescription, foodCartCardDeleteFromCartButton);
 
         return foodCartCard;
@@ -96,6 +104,16 @@ public class CartController extends Controller {
         }
     }
 
+    public void deleteFoodFromCart(Food foodToDeleteFromCart) {
+        try {
+            this.cart.foodList.remove(foodToDeleteFromCart);
+            foodToDeleteFromCart.setInCart(false);
+
+            rerenderCatalogList();
+
+        } catch (Exception ignored) {}
+    }
+
     public void setCartIsEmpty() {
         emptyCart.setVisible(true);
 
@@ -113,12 +131,22 @@ public class CartController extends Controller {
     }
 
     public void onClearCartButtonClick() {
+        for (Food food : this.cart.foodList) {
+            food.setInCart(false);
+        }
+
         if (this.cart != null) {
             if (this.cart.foodList.size() != 0) {
                 this.cart.foodList.clear();
             }
         }
 
-//        renderCartList();
+        rerenderCartList();
+        rerenderCatalogList();
+    }
+
+    public void rerenderCatalogList() {
+        CatalogController catalogController = (CatalogController) this.viewController.getView("catalogView").getController();
+        catalogController.renderFoodList();
     }
 }

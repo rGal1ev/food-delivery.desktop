@@ -5,8 +5,6 @@ import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.util.Duration;
 import models.Controller;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,18 +13,29 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import models.View;
 import models.data.Food;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CatalogController extends Controller {
     public Pane catalogView;
     public FlowPane foodListContainer;
-    public ObservableList<Food> foodList = FXCollections.observableArrayList();
+    public ArrayList<Food> foodList = new ArrayList<>();
     @FXML
     private Pane CartMessagePane;
+
+    @Override
+    public void onMounted() {
+        System.out.println("Catalog view is mounted");
+    }
+
     @FXML
     private void initialize() {
+        test();
+    }
+
+    private void test() {
         CartMessagePane.setVisible(false);
 
         Food firstFood = new Food(1,
@@ -67,13 +76,13 @@ public class CatalogController extends Controller {
 
         foodList.addAll(Arrays.asList(firstFood, secondFood, thirdFood, fourthFood, fivthFood, sixthFood));
 
-        renderFoodList(foodList);
+        renderFoodList();
     }
 
-    private void renderFoodList(ObservableList<Food> foodArrayList) {
+    public void renderFoodList() {
         foodListContainer.getChildren().clear();
 
-        for (Food food : foodArrayList) {
+        for (Food food : this.foodList) {
             FlowPane foodCard = generateFoodCard(food);
             foodListContainer.getChildren().add(foodCard);
         }
@@ -88,7 +97,7 @@ public class CatalogController extends Controller {
         foodCardNode.setVgap(7);
         foodCardNode.setUserData(food.getId());
 
-        Image foodImage = new Image(food.getImage_url());
+        Image foodImage = new Image(food.getImage_url(), true);
         ImageView foodImageView = new ImageView(foodImage);
 
         foodImageView.setFitWidth(160);
@@ -101,6 +110,8 @@ public class CatalogController extends Controller {
         foodName.setPrefHeight(36);
 
         Button foodCardAction = new Button();
+
+        System.out.println(food.getTitle() + " " + food.getInCart());
 
         if (food.inCart()) {
             foodCardAction.setText("Удалить из корзины");
@@ -132,7 +143,7 @@ public class CatalogController extends Controller {
         }
 
         if (!isFoodInCart) {
-            foodToCart.setInCart(false);
+            foodToCart.setInCart(true);
             this.cart.foodList.add(foodToCart);
 
             for (Node child : foodListContainer.getChildren()) {
@@ -162,8 +173,6 @@ public class CatalogController extends Controller {
 
             timeline.play();
         }
-
-        callCartViewRerender();
     }
 
     public void deleteFromCart(Food foodToDeleteFromCart) {
@@ -191,17 +200,9 @@ public class CatalogController extends Controller {
             }
 
         } catch (Exception ignored) {}
-
-        callCartViewRerender();
     }
 
     public void onOpenCartViewButtonClick() {
         this.viewController.changeView("cartView");
-    }
-
-    public void callCartViewRerender() {
-        View cartView = this.viewController.getView("cartView");
-        CartController cartViewController = (CartController) cartView.getController();
-        cartViewController.rerenderCartList();
     }
 }
