@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
@@ -17,13 +18,17 @@ import models.data.Food;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class CatalogController extends Controller {
     public Pane catalogView;
     public FlowPane foodListContainer;
     public ArrayList<Food> foodList = new ArrayList<>();
+
     @FXML
     private Pane CartMessagePane;
+    @FXML
+    private Pane foodInfoContainer;
 
     @Override
     public void onMounted() {
@@ -32,6 +37,8 @@ public class CatalogController extends Controller {
 
     @FXML
     private void initialize() {
+        foodListContainer.setVisible(true);
+        foodInfoContainer.setVisible(false);
         test();
     }
 
@@ -77,6 +84,67 @@ public class CatalogController extends Controller {
         foodList.addAll(Arrays.asList(firstFood, secondFood, thirdFood, fourthFood, fivthFood, sixthFood));
 
         renderFoodList();
+    }
+
+    public void openFoodInfo(Food food, Image savedFoodImage) {
+        foodInfoContainer.setVisible(true);
+
+        Button closeFoodInfoButton = (Button) findByID(foodInfoContainer, "closeFoodInfoButton");
+
+        ImageView foodInfoImageView = (ImageView) findByID(foodInfoContainer, "foodInfoImageView");
+        foodInfoImageView.setImage(savedFoodImage);
+
+        Label foodInfoTitle = (Label) findByID(foodInfoContainer, "foodInfoTitle");
+        Label foodInfoDesc = (Label) findByID(foodInfoContainer, "foodInfoDesc");
+
+        Label foodInfoPrice = (Label) findByID(foodInfoContainer, "foodInfoPrice");
+
+        Button foodInfoActionButton = (Button) findByID(foodInfoContainer, "foodInfoActionButton");
+
+        foodInfoTitle.setText(food.getTitle());
+        foodInfoDesc.setText(food.getDescription());
+        foodInfoPrice.setText(String.valueOf(food.getPrice()));
+
+        if (food.getInCart() == true) {
+            foodInfoActionButton.setOnAction(event -> deleteFromCart(food));
+            foodInfoActionButton.setText("Удалить из корзины");
+        } else {
+            foodInfoActionButton.setOnAction(event -> sendToCart(food));
+            foodInfoActionButton.setText("Добавить в корзину");
+        }
+
+        closeFoodInfoButton.setOnAction(event -> {
+            FadeTransition showInfo = new FadeTransition();
+            showInfo.setDuration(Duration.millis(500));
+            showInfo.setFromValue(1);
+            showInfo.setToValue(0);
+            showInfo.setNode(foodInfoContainer);
+
+            showInfo.play();
+
+            showInfo.setOnFinished(e -> foodInfoContainer.setVisible(false));
+        });
+
+        FadeTransition showInfo = new FadeTransition();
+        showInfo.setDuration(Duration.millis(500));
+        showInfo.setFromValue(0);
+        showInfo.setToValue(1);
+
+        showInfo.setNode(foodInfoContainer);
+
+        foodInfoContainer.setOpacity(0);
+
+        showInfo.play();
+    }
+
+    private Node findByID(Pane rootContainer, String nodeID) {
+        for (Node child : rootContainer.getChildren()) {
+            if (Objects.equals(child.getId(), nodeID)) {
+                return child;
+            }
+        }
+
+        return null;
     }
 
     public void renderFoodList() {
@@ -127,6 +195,10 @@ public class CatalogController extends Controller {
 
             foodCardAction.setOnAction(e -> sendToCart(food));
         }
+
+        foodCardNode.setOnMouseClicked(event -> {
+            openFoodInfo(food, foodImageView.getImage());
+        });
 
         foodCardNode.getChildren().addAll(foodImageView, foodName, foodCardAction);
         return foodCardNode;

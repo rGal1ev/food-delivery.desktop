@@ -112,6 +112,8 @@ public class CartController extends Controller {
             rerenderCatalogList();
 
         } catch (Exception ignored) {}
+
+        rerenderCartList();
     }
 
     public void setCartIsEmpty() {

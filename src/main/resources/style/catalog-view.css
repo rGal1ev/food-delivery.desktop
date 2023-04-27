@@ -18,3 +18,7 @@
 .food-card:hover {
     -fx-background-color: #fafafa;
 }
+
+.food-card-info-title {
+    -fx-font-size: 16px;
+}
