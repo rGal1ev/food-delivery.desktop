@@ -4,6 +4,7 @@ import javafx.scene.layout.Pane;
 import models.View;
 import models.data.Cart;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -23,7 +24,7 @@ public class ViewController {
         }
     }
 
-    public void changeView(String viewID) {
+    public void changeView(String viewID) throws SQLException {
         for (View view : viewList) {
             if (Objects.equals(view.getViewNode().getId(), viewID)) {
                 viewContainer.getChildren().clear();

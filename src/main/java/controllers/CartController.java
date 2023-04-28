@@ -1,16 +1,29 @@
 package controllers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
+import main.DataBase;
+import main.Utils;
 import models.Controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import models.data.Food;
+import models.data.Order;
+
+import java.sql.SQLException;
 
 public class CartController extends Controller {
     public Button openCatalogButton;
@@ -26,10 +39,15 @@ public class CartController extends Controller {
 
     @FXML
     private Pane clearCartContainer;
+    @FXML
+    private ChoiceBox<String> paymentTypeChoice;
+    @FXML
+    private Pane orderContainer;
+    @FXML
+    private Pane orderInfoContainer;
 
     @Override
     public void onMounted() {
-        System.out.println("Cart view is mounted");
         rerenderCartList();
     }
 
@@ -40,10 +58,104 @@ public class CartController extends Controller {
         } else {
             setCartListVisible();
         }
+
+        orderContainer.setVisible(false);
+
+        ObservableList<String> paymentTypeList = FXCollections.observableArrayList("Наличными после доставки", "Картой после доставки");
+        paymentTypeChoice.setItems(paymentTypeList);
+        paymentTypeChoice.setValue("Наличными после доставки");
     }
 
-    public void onOpenCatalogButton() {
+    public void onOpenOrderMakeButtonClick(ActionEvent event) {
+        orderContainer.setVisible(true);
+    }
+
+    public void onCloseOrderCOntainerButtonClick(ActionEvent event) {
+        orderContainer.setVisible(false);
+    }
+
+    public void onOpenCatalogButton() throws SQLException {
         this.viewController.changeView("catalogView");
+    }
+
+    public boolean onSendOrderButtonClick() throws SQLException {
+        TextField phoneNumberTF = (TextField) Utils.findByID(orderContainer, "orderPhone");
+        TextField orderEmailTF = (TextField) Utils.findByID(orderContainer, "orderEmail");
+        TextField orderUserNameTF = (TextField) Utils.findByID(orderContainer, "orderUserName");
+        TextField orderDeliveryAddressTF = (TextField) Utils.findByID(orderContainer, "orderDeliveryAddress");
+        TextField orderApartmentEntranceTF = (TextField) Utils.findByID(orderContainer, "orderApartmentEntrance");
+        TextField orderApartmentNumberTF = (TextField) Utils.findByID(orderContainer, "orderApartmentNumber");
+
+        if (!validateFields(phoneNumberTF, orderEmailTF, orderUserNameTF, orderDeliveryAddressTF, orderApartmentEntranceTF, orderApartmentNumberTF)) {
+            return false;
+        }
+
+        String phoneNumber = phoneNumberTF.getText();
+        String orderEmail = orderEmailTF.getText();
+        String orderUserName = orderUserNameTF.getText();
+        String orderDeliveryAddress = orderDeliveryAddressTF.getText();
+        int orderApartmentEntrance = Integer.valueOf(orderApartmentEntranceTF.getText());
+        int orderApartmentNumber = Integer.valueOf(orderApartmentNumberTF.getText());
+        String paymentTypeChoiceValue = paymentTypeChoice.getValue();
+
+        System.out.println(phoneNumber + " " + orderEmail + " " + orderUserName + " " + orderDeliveryAddress + " " + orderApartmentEntrance + " " + orderApartmentNumber);
+
+        Order sendingOrder = new Order(this.cart.foodList,
+                                       phoneNumber,
+                                       orderEmail,
+                                       orderUserName,
+                                       orderDeliveryAddress,
+                                       orderApartmentEntrance,
+                                       orderApartmentNumber,
+                                       paymentTypeChoiceValue);
+
+        boolean resultIsSuccessfully = DataBase.sendOrder(sendingOrder);
+
+        if (resultIsSuccessfully) {
+            phoneNumberTF.setText("");
+            orderEmailTF.setText("");
+            orderUserNameTF.setText("");
+            orderDeliveryAddressTF.setText("");
+            orderApartmentEntranceTF.setText("");
+            orderApartmentNumberTF.setText("");
+
+            orderContainer.setVisible(false);
+
+            orderInfoContainer.setVisible(true);
+
+            Timeline timeline = new Timeline(new KeyFrame(
+                    Duration.millis(5 * 1000),
+                    afterEnd -> orderInfoContainer.setVisible(false)
+            ));
+
+            timeline.play();
+
+            this.cart.foodList.clear();
+            rerenderCatalogList();
+            rerenderCartList();
+        } else {
+            System.out.println("Неуспешно!");
+        }
+
+        return false;
+    }
+
+    private boolean validateFields(TextField ...fields) {
+        String nonPassedValidationField = "-fx-border-color: red;" +
+                "-fx-border-radius: 4px;";
+        String passedValidationField = "-fx-border-color: #cecece;" +
+                "-fx-border-radius: 4px;";
+
+        for (TextField field : fields) {
+            if (field.getText().isEmpty()) {
+                field.setStyle(nonPassedValidationField);
+                return false;
+            } else {
+                field.setStyle(passedValidationField);
+            }
+        }
+
+        return true;
     }
 
     private FlowPane generateCartCard(Food food) {
@@ -93,10 +205,23 @@ public class CartController extends Controller {
         if (this.cart.foodList.size() != 0) {
             foodCartList.getChildren().clear();
 
+            double totalFoodPrice = 0;
+            int totalFoodCount = 0;
+
             for (Food food : this.cart.foodList) {
+                totalFoodCount++;
+                totalFoodPrice = totalFoodPrice + food.getPrice();
+
                 FlowPane foodCartCard = generateCartCard(food);
                 foodCartList.getChildren().add(foodCartCard);
             }
+
+            Label cartFoodCountInfo = (Label) Utils.findByID(cartInfo, "cartFoodCountInfo");
+            Label cartFoodTotalPrice = (Label) Utils.findByID(cartInfo, "cartFoodTotalPrice");
+
+            cartFoodCountInfo.setText("Всего товаров: " + totalFoodCount);
+            cartFoodTotalPrice.setText("Общая цена: " + totalFoodPrice);
+
             setCartListVisible();
 
         } else {

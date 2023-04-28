@@ -3,6 +3,8 @@ package models;
 import controllers.ViewController;
 import models.data.Cart;
 
+import java.sql.SQLException;
+
 public class Controller {
     public Cart cart;
 
@@ -16,5 +18,5 @@ public class Controller {
         this.viewController = viewController;
     }
 
-    public void onMounted() {}
+    public void onMounted() throws SQLException {}
 }

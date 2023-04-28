@@ -9,8 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane fx:controller="controllers.ProfileController" fx:id="profileView" prefHeight="440.0" prefWidth="400.0" styleClass="light-container" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="profileView" prefHeight="440.0" prefWidth="400.0" styleClass="light-container" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ProfileController">
       <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="150.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@../assets/icons/profile.png" />
       </ImageView>
@@ -27,7 +26,7 @@
          </ImageView>
       </Pane>
 
-      <Button layoutX="99.0" layoutY="319.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="201.0" text="Войти" />
+      <Button layoutX="99.0" layoutY="319.0" mnemonicParsing="false" onAction="#onAuthButtonClick" prefHeight="35.0" prefWidth="201.0" text="Войти" />
 
    <stylesheets>
       <URL value="@../main.css" />

@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainController {
     @FXML
@@ -50,13 +51,13 @@ public class MainController {
         Stage stage = (Stage) closeApp.getScene().getWindow();
         stage.close();
     }
-    public void onOpenCartViewClick() {
+    public void onOpenCartViewClick() throws SQLException {
         viewController.changeView("cartView");
     }
-    public void onOpenCatalogViewClick() {
+    public void onOpenCatalogViewClick() throws SQLException {
         viewController.changeView("catalogView");
     }
-    public void onOpenProfileViewClick() {
+    public void onOpenProfileViewClick() throws SQLException {
         viewController.changeView("profileView");
     }
 }
