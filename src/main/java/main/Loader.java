@@ -18,6 +18,11 @@ public class Loader extends Application {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
+
+        System.out.println("\n\n\n");
+        System.out.println("======= Food delivery Application is launched =======");
+        System.out.println("======================== DEV ========================");
+        System.out.println("\n\n");
     }
 
     public static void main(String[] args) {

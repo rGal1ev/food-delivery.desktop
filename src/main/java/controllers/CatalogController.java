@@ -41,9 +41,13 @@ public class CatalogController extends Controller {
             isFirstMounting = !isFirstMounting;
 
             ArrayList<Food> foodList = DataBase.getFoods();
-            this.foodList.addAll(foodList);
 
-            renderFoodList();
+            if (foodList == null || foodList.size() == 0) {
+                System.out.println("База данных пуста");
+            } else {
+                this.foodList.addAll(foodList);
+                renderFoodList();
+            }
         }
     }
 
