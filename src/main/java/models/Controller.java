@@ -1,22 +1,28 @@
 package models;
 
 import controllers.ViewController;
-import models.data.Cart;
 
-import java.sql.SQLException;
+import java.io.IOException;
 
 public class Controller {
-    public Cart cart;
-
     public ViewController viewController;
-
-    public void setCarState(Cart cart) {
-        this.cart = cart;
-    }
+    private Token token;
 
     public void setViewController(ViewController viewController) {
         this.viewController = viewController;
     }
 
-    public void onMounted() throws SQLException {}
+    public void onMounted() {}
+
+    public void setTokenState(Token token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token.getBody();
+    }
+
+    public void setToken(String tokenString) {
+        this.token.setBody(tokenString);
+    }
 }

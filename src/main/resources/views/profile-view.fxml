@@ -16,9 +16,8 @@
 
       <Label layoutX="110.0" layoutY="174.0" styleClass="title" text="Вход в профиль" />
       <Label layoutX="87.0" layoutY="203.0" text="Доступно только для администраторов" />
-      <TextField layoutX="99.0" layoutY="234.0" prefHeight="35.0" prefWidth="201.0" promptText="Введите почту" />
-      <TextField layoutX="100.0" layoutY="276.0" prefHeight="35.0" prefWidth="156.0" promptText="Введите пароль" />
-      <PasswordField layoutX="100.0" layoutY="276.0" prefHeight="35.0" prefWidth="156.0" promptText="Введите пароль" />
+      <TextField fx:id="loginField" layoutX="99.0" layoutY="234.0" prefHeight="35.0" prefWidth="201.0" promptText="Введите логин" />
+      <TextField fx:id="passwordField" layoutX="100.0" layoutY="276.0" prefHeight="35.0" prefWidth="156.0" promptText="Введите пароль" />
 
       <Pane layoutX="266.0" layoutY="276.0" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #ffffff; -fx-background-radius: 3px; -fx-border-color: #cecece; -fx-border-radius: 3px;">
          <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="8.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">

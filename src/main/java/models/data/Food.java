@@ -1,19 +1,47 @@
 package models.data;
 
-public class Food {
-    private int id;
-    private String title;
-    private String description;
-    private double price;
-    private boolean inCart = false;
-    private String image_url;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public Food(int id, String title, String description, double price, String image_url) {
+public class Food {
+    @SerializedName("id")
+    @Expose
+    private int id;
+
+    @SerializedName("title")
+    @Expose
+    private String title;
+
+    @SerializedName("description")
+    @Expose
+    private String description;
+
+    @SerializedName("price")
+    @Expose
+    private double price;
+
+    @SerializedName("image_url")
+    @Expose
+    private String imageURL;
+
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setPrice(double price) {
         this.price = price;
-        this.image_url = image_url;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public int getId() {
@@ -32,39 +60,7 @@ public class Food {
         return price;
     }
 
-    public boolean inCart() {
-        return inCart;
+    public String getImageURL() {
+        return imageURL;
     }
-
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setInCart(boolean inCart) {
-        this.inCart = inCart;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
-    }
-
-    public boolean getInCart() {
-        return this.inCart;
-    };
 }
