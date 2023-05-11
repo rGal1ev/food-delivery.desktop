@@ -3,6 +3,7 @@ package network;
 import models.data.Food;
 import models.data.AuthResponse;
 import models.data.Order;
+import models.data.User;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -18,6 +19,9 @@ public interface Routes {
 
     @GET("/get/order")
     public Call<List<Order>> getOrders(@Header("x-access-token") String USER_TOKEN);
+
+    @GET("/get/user/current")
+    public Call<User> getEmployeeInfo(@Header("x-access-token") String USER_TOKEN);
 
     @GET("/set/finished/order/{orderID}")
     public Call<AuthResponse> setOrderIsFinished(@Header("x-access-token") String USER_TOKEN, @Path("orderID") int orderID);

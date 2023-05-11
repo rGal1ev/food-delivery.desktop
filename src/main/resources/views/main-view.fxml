@@ -12,7 +12,7 @@
    <Pane layoutY="35.0" prefHeight="55.0" prefWidth="400.0">
       <Pane fx:id="OrdersViewNavigationLink" onMouseClicked="#onOpenOrdersViewClick" prefHeight="55.0" prefWidth="199.0" styleClass="nav-button">
          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="54.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../assets/icons/cart.png" />
+            <Image url="@../assets/icons/orders.png" />
          </ImageView>
          <Label layoutX="103.0" layoutY="20.0" text="Заказы" />
       </Pane>
@@ -49,11 +49,11 @@
    </Pane>
 
    <Pane fx:id="viewContainer" layoutY="100.0" prefHeight="440.0" prefWidth="400.0">
-      <Label layoutX="126.0" layoutY="206.0" styleClass="title" text="Food Delivery" />
+      <Label layoutX="78.0" layoutY="203.0" styleClass="title" text="Food Delivery - Заказы" />
       <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="150.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@../assets/icons/logo.png" />
       </ImageView>
-      <Label layoutX="78.0" layoutY="235.0" prefHeight="55.0" prefWidth="245.0" text="Выбирай лучшее качество, заказывай вкусню дешевую и не отправленную еду бесплатно!" textAlignment="CENTER" wrapText="true" />
+      <Label layoutX="78.0" layoutY="235.0" prefHeight="55.0" prefWidth="245.0" text="Менеджмент системы для управления заказами" textAlignment="CENTER" wrapText="true" />
       <Button layoutX="121.0" layoutY="304.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="156.0" text="Войти в профиль" textFill="WHITE" />
 
       <styleClass>

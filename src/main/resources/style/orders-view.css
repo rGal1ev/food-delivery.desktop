@@ -2,3 +2,31 @@
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
+
+.order-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 0px;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px 0px 0px 0px;
+}
+
+.order-card > .button {
+   visibility: false;
+}
+
+.order-card:hover {
+    -fx-border-color: #cacaca;
+}
+
+.order-card:hover > .button {
+    visibility: true;
+}
+
+.empty-new-orders-message {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.food-card-title {
+    -fx-font-weight:bold;
+}

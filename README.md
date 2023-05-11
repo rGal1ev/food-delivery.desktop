@@ -1,3 +1,13 @@
-# food-delivery-desktop
+# Food Delivery - Десктоп
 
-Simple "Food Delivery" JavaFX Application
+> Приложение написано на языке программирования Java, с использованием фреймворка JavaFX
+
+> Бэкенд: Food Delivery API
+
+## Возможности
+[x] Просмотр и завершение входящих заказов
+[x] Администрирование пользователей
+[x] Возможность авторизации в роли сотрудника
+
+## User flow
+> User flow desktop...

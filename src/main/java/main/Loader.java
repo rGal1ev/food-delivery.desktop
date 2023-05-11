@@ -3,6 +3,7 @@ package main;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -24,12 +25,10 @@ public class Loader extends Application {
         stage.setTitle("Food Delivery");
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
-        stage.show();
 
-        System.out.println("\n\n\n");
-        System.out.println("======= Food delivery Application is launched =======");
-        System.out.println("======================== DEV ========================");
-        System.out.println("\n\n");
+        stage.getIcons().add(new Image(getClass().getResource("/assets/app-icon.png").openStream()));
+
+        stage.show();
     }
 
     public static void main(String[] args) {

@@ -10,22 +10,41 @@
 <?import javafx.scene.layout.Pane?>
 
 <Pane fx:id="profileView" prefHeight="440.0" prefWidth="400.0" styleClass="light-container" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ProfileController">
-      <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="150.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@../assets/icons/profile.png" />
-      </ImageView>
-
-      <Label layoutX="110.0" layoutY="174.0" styleClass="title" text="Вход в профиль" />
-      <Label layoutX="87.0" layoutY="203.0" text="Доступно только для администраторов" />
-      <TextField fx:id="loginField" layoutX="99.0" layoutY="234.0" prefHeight="35.0" prefWidth="201.0" promptText="Введите логин" />
-      <TextField fx:id="passwordField" layoutX="100.0" layoutY="276.0" prefHeight="35.0" prefWidth="156.0" promptText="Введите пароль" />
-
-      <Pane layoutX="266.0" layoutY="276.0" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #ffffff; -fx-background-radius: 3px; -fx-border-color: #cecece; -fx-border-radius: 3px;">
-         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="8.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../assets/icons/show-pass.png" />
-         </ImageView>
-      </Pane>
-
-      <Button layoutX="99.0" layoutY="319.0" mnemonicParsing="false" onAction="#onAuthButtonClick" prefHeight="35.0" prefWidth="201.0" text="Войти" />
+   <Pane fx:id="loginContainer" layoutX="-1.0" prefHeight="440.0" prefWidth="400.0" visible="false">
+      <children>
+            <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="150.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+               <Image url="@../assets/icons/profile.png" />
+            </ImageView>
+      
+            <Label layoutX="113.0" layoutY="172.0" styleClass="title" text="Вход в профиль" />
+            <Label layoutX="92.0" layoutY="203.0" text="Доступно только для администраторов" />
+      
+            <Button layoutX="100.0" layoutY="331.0" mnemonicParsing="false" onAction="#onAuthButtonClick" prefHeight="35.0" prefWidth="201.0" text="Войти" />
+         <PasswordField fx:id="passwordField" layoutX="100.0" layoutY="274.0" prefHeight="35.0" prefWidth="201.0" promptText="Введите пароль" />
+            <TextField fx:id="loginField" layoutX="100.0" layoutY="231.0" prefHeight="35.0" prefWidth="201.0" promptText="Введите логин" />
+         <Label fx:id="errorMessageText" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="311.0" prefHeight="17.0" prefWidth="298.0" text="Сообщение об ошибке" textAlignment="CENTER" />
+      </children>
+   </Pane>
+   <Pane fx:id="profileContainer" prefHeight="440.0" prefWidth="400.0">
+      <children>
+         <Label layoutX="14.0" layoutY="14.0" styleClass="profile-welcome" text="Здравствуйте," />
+         <Label fx:id="userNameText" layoutX="14.0" layoutY="39.0" text="&lt;Имя сотрудника&gt;" />
+         <Button fx:id="logoutButton" layoutX="14.0" layoutY="391.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="372.0" text="Выйти" />
+         <Label layoutX="14.0" layoutY="165.0" styleClass="profile-subtitle" text="Почта:" />
+         <Label layoutX="13.0" layoutY="116.0" styleClass="profile-subtitle" text="Номер телефона:" />
+         <Label fx:id="userEmailText" layoutX="14.0" layoutY="185.0" text="&lt;почта пользователя&gt;" />
+         <Label fx:id="userPhoneText" layoutX="12.0" layoutY="136.0" text="&lt;телефон пользователя&gt;" />
+         <Label layoutX="14.0" layoutY="84.0" styleClass="profile-welcome" text="Данные аккаунта" />
+         <Pane layoutX="12.0" layoutY="213.0" prefHeight="166.0" prefWidth="372.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5px;">
+            <children>
+               <Label layoutX="138.0" layoutY="39.0" styleClass="profile-subtitle" text="Новых заказов" />
+               <Label fx:id="orderNotFinishedCountText" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="59.0" prefHeight="17.0" prefWidth="126.0" text="&lt;&gt;" textAlignment="CENTER" />
+               <Button fx:id="openOrdersView" layoutX="118.0" layoutY="83.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="136.0" text="Перейти к заказам" />
+            </children>
+         </Pane>
+         <Button fx:id="listenNewOrders" layoutX="262.0" layoutY="17.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" text="Слушать заказы" />
+      </children>
+   </Pane>
 
    <stylesheets>
       <URL value="@../main.css" />

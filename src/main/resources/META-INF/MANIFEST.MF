@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Main-Class: main.Launcher
+Class-Path: controlsfx-11.1.1.jar converter-gson-2.9.0.jar retrofit-2.9.
+ 0.jar okio-1.17.2.jar javafx-fxml-18.0.1.jar javafx-base-18.0.1-win.jar
+  javafx-controls-18.0.1-win.jar okhttp-3.14.9.jar javafx-graphics-18.0.
+ 1-win.jar javafx-graphics-18.0.1.jar javafx-fxml-18.0.1-win.jar javafx-
+ base-18.0.1.jar gson-2.10.1.jar javafx-controls-18.0.1.jar
+

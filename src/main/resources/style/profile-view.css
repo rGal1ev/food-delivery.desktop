@@ -1,0 +1,8 @@
+.profile-welcome {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.profile-subtitle {
+    -fx-font-size: 14px;
+}
