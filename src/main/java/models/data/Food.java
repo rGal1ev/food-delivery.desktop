@@ -20,9 +20,17 @@ public class Food {
     @Expose
     private double price;
 
+    @SerializedName("count")
+    @Expose
+    private int count;
+
     @SerializedName("image_url")
     @Expose
     private String imageURL;
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -46,6 +54,10 @@ public class Food {
 
     public int getId() {
         return id;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     public String getTitle() {

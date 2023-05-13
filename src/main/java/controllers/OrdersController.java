@@ -12,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import main.Utils;
 import models.Controller;
 import models.data.AuthResponse;
 import models.data.Food;
@@ -28,6 +27,7 @@ import java.util.List;
 public class OrdersController extends Controller {
     @FXML private Pane nonAuthMessage;
     @FXML private Pane ordersPanel;
+    @FXML private VBox notFinishedOrdersContainer;
     @FXML private VBox ordersContainer;
 
     @FXML Pane emptyNewOrdersMessage;
@@ -37,8 +37,9 @@ public class OrdersController extends Controller {
     @FXML Label orderCardUserName;
     @FXML Label orderCardDeliveryAddress;
     @FXML Label orderCardUserPhone;
-    @FXML VBox orderCartContainer;
+    @FXML Label orderCardTotalPrice;
 
+    @FXML VBox orderCartContainer;
     @FXML Button closeOrderCardContainer;
 
     @Override
@@ -68,15 +69,19 @@ public class OrdersController extends Controller {
                     @Override
                     public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
                         List<Order> notFinishedOrderList = new ArrayList<>();
+                        List<Order> finishedOrderList = new ArrayList<>();
 
                         for (Order order : response.body()) {
                             if (!order.isFinished()) {
                                 notFinishedOrderList.add(order);
+                            } else {
+                                finishedOrderList.add(order);
                             }
                         }
 
                         Platform.runLater(() -> {
                             renderNotFinishedOrderList(notFinishedOrderList);
+                            renderFinishedOrderList(finishedOrderList);
                         });
                     }
 
@@ -87,8 +92,19 @@ public class OrdersController extends Controller {
                 });
     }
 
-    public void renderNotFinishedOrderList(List<Order> orderList) {
+    public void renderFinishedOrderList(List<Order> orderList) {
         ordersContainer.getChildren().clear();
+
+        if (orderList.size() != 0) {
+            for (Order order : orderList) {
+                HBox orderCard = generateOrder(order);
+                ordersContainer.getChildren().add(orderCard);
+            }
+        }
+    }
+
+    public void renderNotFinishedOrderList(List<Order> orderList) {
+        notFinishedOrdersContainer.getChildren().clear();
 
         if (orderList.size() == 0) {
             emptyNewOrdersMessage.setVisible(true);
@@ -97,9 +113,42 @@ public class OrdersController extends Controller {
 
             for (Order order : orderList) {
                 HBox orderCard = generateNotFinishedOrder(order);
-                ordersContainer.getChildren().add(orderCard);
+                notFinishedOrdersContainer.getChildren().add(orderCard);
             }
         }
+    }
+
+    public HBox generateOrder(Order order) {
+        HBox orderContainer = new HBox();
+        orderContainer.setSpacing(15);
+        orderContainer.setPrefHeight(74);
+        orderContainer.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        orderContainer.setPadding(new Insets(0, 0, 0, 10));
+        orderContainer.setAlignment(Pos.CENTER_LEFT);
+        orderContainer.getStyleClass().add("order-card");
+
+        VBox orderInfoContainer = new VBox();
+        orderInfoContainer.setPrefWidth(230);
+        orderInfoContainer.setPadding(new Insets(10, 0, 0, 0));
+
+        Label orderID = new Label();
+        orderID.setText("Заказ № " + order.getId());
+
+        Label orderUserName = new Label();
+        orderUserName.setText("Заказчик: " + order.getFirstName());
+
+        Label orderDeliveryAdress = new Label();
+        orderDeliveryAdress.setText("Адрес доставки: " + order.getDeliveryAddress());
+
+        orderInfoContainer.getChildren().addAll(orderID, orderUserName, orderDeliveryAdress);
+
+        orderContainer.setOnMouseClicked(event -> {
+            orderFoodCard.setVisible(true);
+            updateOrderFoodCardInfo(order);
+        });
+
+        orderContainer.getChildren().addAll(orderInfoContainer);
+        return orderContainer;
     }
 
     public HBox generateNotFinishedOrder(Order order) {
@@ -141,7 +190,6 @@ public class OrdersController extends Controller {
         });
 
         orderContainer.getChildren().addAll(orderInfoContainer, finishOrder);
-
         return orderContainer;
     }
 
@@ -151,6 +199,14 @@ public class OrdersController extends Controller {
         orderCardUserName.setText("Заказчик: " + order.getFirstName());
         orderCardDeliveryAddress.setText("Адрес доставки: " + order.getDeliveryAddress());
         orderCardUserPhone.setText("Номер телефона: " + order.getPhone());
+
+        double totalOrderPrice = 0;
+
+        for (Food food : order.getCart()) {
+            totalOrderPrice = totalOrderPrice + food.getPrice() * food.getCount();
+        }
+
+        orderCardTotalPrice.setText(Math.round(totalOrderPrice) + "₽");
 
         generateOrderFoodCart(order.getCart());
 
@@ -178,13 +234,19 @@ public class OrdersController extends Controller {
         foodImageView.setFitHeight(100);
 
         VBox foodCardInfo = new VBox();
+        foodCardInfo.setPrefHeight(56);
+        foodCardInfo.setPadding(new Insets(5, 0, 0, 0));
 
         Label foodTitle = new Label(food.getTitle());
+        foodTitle.getStyleClass().add("food-card-title");
+
         Label foodDescription = new Label(food.getDescription());
         foodDescription.setWrapText(true);
-        foodCardInfo.setPrefHeight(56);
 
-        foodCardInfo.getChildren().addAll(foodTitle, foodDescription);
+        Label foodCount = new Label("Количество: " + food.getCount());
+        Label foodTotalPrice = new Label("Цена: " + Math.round(food.getPrice() * food.getCount()) + "₽");
+
+        foodCardInfo.getChildren().addAll(foodTitle, foodDescription, foodCount, foodTotalPrice);
 
         foodCard.getChildren().addAll(foodImageView, foodCardInfo);
 

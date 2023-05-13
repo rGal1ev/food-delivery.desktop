@@ -16,6 +16,9 @@ public class MainController {
     @FXML private Pane ProfileViewNavigationLink;
     @FXML private Pane OrdersViewNavigationLink;
 
+    private double xOffset;
+    private double yOffset;
+
     private ViewController viewController;
 
     @FXML
@@ -36,6 +39,24 @@ public class MainController {
     public void onCloseAppClick() {
         Stage stage = (Stage) closeApp.getScene().getWindow();
         stage.close();
+    }
+
+    public void onMousePressedBar(javafx.scene.input.MouseEvent event) {
+        Stage stage = (Stage) closeApp.getScene().getWindow();
+
+        xOffset = stage.getX() - event.getScreenX();
+        yOffset = stage.getY() - event.getScreenY();
+    }
+
+    public void onMouseDraggedBar(javafx.scene.input.MouseEvent event) {
+        Stage stage = (Stage) closeApp.getScene().getWindow();
+
+        stage.setX(event.getScreenX() + xOffset);
+        stage.setY(event.getScreenY() + yOffset);
+    }
+
+    public void onSwitchToProfileClick() {
+        viewController.changeView("profileView");
     }
 
     public void onOpenProfileViewClick() {

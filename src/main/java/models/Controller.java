@@ -2,8 +2,6 @@ package models;
 
 import controllers.ViewController;
 
-import java.io.IOException;
-
 public class Controller {
     public ViewController viewController;
     private Token token;

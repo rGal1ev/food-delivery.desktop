@@ -5,7 +5,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,11 +22,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ProfileController extends Controller {
     @FXML private TextField loginField;
@@ -65,27 +61,20 @@ public class ProfileController extends Controller {
             viewController.changeView("ordersView");
         });
 
-        listenNewOrders.setOnAction(event -> {
-            if (newOrdersWatchers == null) {
-                newOrdersWatchers = new Timeline();
-                newOrdersWatchers.setCycleCount(Animation.INDEFINITE);
-            }
+        if (!getToken().isEmpty()) {
+            updateOrdersWatcher();
+        }
+    }
 
-            if (listenNewOrders.getText().equals("Слушать заказы")) {
-                newOrdersWatchers.getKeyFrames().add(new KeyFrame(Duration.millis(5000), actionEvent -> {
-                    System.out.println("Слушаю");
-                    fetchNewOrders();
-                }));
+    public void updateOrdersWatcher() {
+        if (newOrdersWatchers == null) {
+            newOrdersWatchers = new Timeline();
+            newOrdersWatchers.setCycleCount(Animation.INDEFINITE);
 
-                newOrdersWatchers.play();
+            newOrdersWatchers.getKeyFrames().add(new KeyFrame(Duration.millis(5000), actionEvent -> fetchNewOrders()));
 
-                listenNewOrders.setText("Остановить");
-            } else {
-                newOrdersWatchers.getKeyFrames().clear();
-                newOrdersWatchers.stop();
-                listenNewOrders.setText("Слушать заказы");
-            }
-        });
+            newOrdersWatchers.play();
+        }
     }
 
     private void fetchCurrentUser() {
@@ -106,6 +95,8 @@ public class ProfileController extends Controller {
     }
 
     private void renderUserInfo() {
+        updateOrdersWatcher();
+
         if (currentUser != null) {
             userNameText.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
 
@@ -167,7 +158,7 @@ public class ProfileController extends Controller {
 
         newOrdersWatchers.getKeyFrames().clear();
         newOrdersWatchers.stop();
-
+        newOrdersWatchers = null;
     }
 
     public void onAuthButtonClick(ActionEvent event) {
